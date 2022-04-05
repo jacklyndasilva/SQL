@@ -1,0 +1,21 @@
+CREATE TABLE Store (id INTEGER PRIMARY KEY, name TEXT, price INTEGER, description TEXT, category TEXT);
+
+INSERT INTO Store VALUES (1, "Garmin", 150, "running gear", "fitness");
+INSERT INTO Store VALUES(2, "Strava", 30, "running statistics", "fitness");
+INSERT INTO Store VALUES(3, "Brooks", 150, "running gear", "fitness");
+INSERT INTO Store VALUES(4, "Fabletics", 100, "running gear", "fitness");
+INSERT INTO Store VALUES(5, "Glamnetics", 20, "presson nails", "beauty");
+INSERT INTO Store VALUES(6, "Charlotte Tilsbury", 40, "highlighter", "beauty");
+INSERT INTO Store VALUES(7, "Mejuri", 100, "bold spheres necklace", "jewelry");
+INSERT INTO Store VALUES(8,"Mejuri" ,50, "vermeil huggies", "jewelry");
+INSERT INTO Store VALUES(9,"Self tanning drops", 20, "moisturizer", "beauty");
+INSERT INTO Store VALUES(10, "Everlane", 40, "body suit", "clothing");
+INSERT INTO Store VALUES(11, "H&M", 40, "wrap dress", "clothing");
+INSERT INTO Store VALUES(12, "Abercrombie", 40, "Dad shorts", "clothing");
+INSERT INTO Store VALUES(13, "Patagonia", 120, "Fleece zip up", "clothing");
+INSERT INTO Store VALUES(14, "Retinol", 50, "Night time", "beauty");
+INSERT INTO Store VALUES(15, "Compression Socks", 30, "long socks", "fitness");
+
+SELECT category, SUM(price)
+FROM Store
+GROUP BY category order by SUM(price);
