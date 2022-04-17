@@ -1,21 +1,44 @@
-CREATE TABLE Store (id INTEGER PRIMARY KEY, name TEXT, price INTEGER, description TEXT, category TEXT);
+CREATE TABLE Store (id INTEGER PRIMARY KEY, title TEXT, author text, first_published integer, description TEXT, category TEXT);
 
-INSERT INTO Store VALUES (1, "Garmin", 150, "running gear", "fitness");
-INSERT INTO Store VALUES(2, "Strava", 30, "running statistics", "fitness");
-INSERT INTO Store VALUES(3, "Brooks", 150, "running gear", "fitness");
-INSERT INTO Store VALUES(4, "Fabletics", 100, "running gear", "fitness");
-INSERT INTO Store VALUES(5, "Glamnetics", 20, "presson nails", "beauty");
-INSERT INTO Store VALUES(6, "Charlotte Tilsbury", 40, "highlighter", "beauty");
-INSERT INTO Store VALUES(7, "Mejuri", 100, "bold spheres necklace", "jewelry");
-INSERT INTO Store VALUES(8,"Mejuri" ,50, "vermeil huggies", "jewelry");
-INSERT INTO Store VALUES(9,"Self tanning drops", 20, "moisturizer", "beauty");
-INSERT INTO Store VALUES(10, "Everlane", 40, "body suit", "clothing");
-INSERT INTO Store VALUES(11, "H&M", 40, "wrap dress", "clothing");
-INSERT INTO Store VALUES(12, "Abercrombie", 40, "Dad shorts", "clothing");
-INSERT INTO Store VALUES(13, "Patagonia", 120, "Fleece zip up", "clothing");
-INSERT INTO Store VALUES(14, "Retinol", 50, "Night time", "beauty");
-INSERT INTO Store VALUES(15, "Compression Socks", 30, "long socks", "fitness");
+INSERT INTO Store VALUES (1,"Thinking, Fast and Slow","Daniel Kahneman", 2020,"This book shows how our fast-paced world and reliance on instinct can be damaging", "non-fiction");
+INSERT INTO Store VALUES(2, "The Pale-Faced Lie", "David Crowe", 1918,"This is a memoir of true crime, the story of David Crow's unlikely survival and success despite a chaotic and traumatic upbringing.", "non-fiction");
+INSERT INTO Store VALUES(3, "Bad Blood: Secrets and Lies in a Silicon Valley Startup","John Carreyrou", 2018, "Covers the rise and fall of Theranos, the multibillion-dollar biotech startup headed by Elizabeth Holmes.", "non-fiction");
+INSERT INTO Store VALUES(4, "Catch and Kill: Lies, Spies, and a Conspiracy to Protect Predators", "Ronan Farrow, Year",2019, "The investigative story of the abuses and cover-ups surrounding Harvey Weinstein, this true crime book reads like a thriller.", "non-fiction");
+INSERT INTO Store VALUES(5, "Walden","Henry David Thoreau", 1854, "A reflection upon simple living in natural surroundings.", "non-fiction");
+INSERT INTO Store VALUES(6, "The Catcher in the Rye","J.D. Salinger", 1951, "J.D. Salinger’s 1951 novel of post-war alienation told by angst-ridden teen Holden Caulfield.", "literature");
+INSERT INTO Store VALUES(7, "Grit", "Angela Duckwork", 2018, "The secret to outstanding achievement is not talent but a special blend of passion and persistence she calls grit", "non-fiction");
+INSERT INTO Store VALUES(8,"Zen and the art of Motorcycle Maintenance", "Robert Pirsig" ,1974, "An Inquiry into Values", "novel");
+INSERT INTO Store VALUES(9,"The Alchemist", "Paulo Coelho",1988, "The mystical story of Santiago, an Andalusian shepherd boy", "novel");
+INSERT INTO Store VALUES(10, "The Women Who Smashed Codes", "Jason Fagone", 2017, "The story of Elizebeth Friedman, the mother of modern cryptoanalysis and cryptography", "non-fiction");
+INSERT INTO Store VALUES(11, "Chaos: Charles Manson, the CIA and the Secret History of the 60s", "Tom O'Neil with Dan Piepenbring", 2019,"An exploration into investigative discrepancies in the infamous Sharon Tate murders associated with Charles Manson and his Family", "non-fiction");
+INSERT INTO Store VALUES(12, "Mindset: The New Psychology of Success", "Carol Dweck", 2006, "Shows how success almost every area of human endeavor can be dramatically influenced by how we think about our talents and abilities.", "non-fiction");
+INSERT INTO Store VALUES(13, "Over the Edge, Death in the Grand Canyon", "Thomas Meyers",2001,"Gripping accounts of all known fatal mishaps in the most famous of the World's Seven Natural Wonders", "non-fiction");
+INSERT INTO Store VALUES(14, "The Highly Sensitive Person", "Elaine N. Aron", 1996,"An indepth look at characteristics that define sensitivity.", "non-fiction");
+INSERT INTO Store VALUES(15, "In Cold Blood", "Truman Capote", 1966, "In Cold Blood details the 1959 murders of four members of a family in the rural community of Holcomb, Kansas.", "non-fiction");
 
-SELECT category, SUM(price)
-FROM Store
-GROUP BY category order by SUM(price);
+
+
+--How many books in this table are in each category?
+
+SELECT category, Count(category)
+FROM store
+group by category;
+
+--Which books are about true crime or murder?
+
+SELECT title, description
+FROM store
+WHERE description like "%crime%";
+
+--How Many books were first published before 1950?
+
+Select count(title) 
+FROM store
+WHERE first_published <1950;
+
+--Which books were published after 1980?
+
+Select title
+FROM store
+WHERE first_published>1980
+Order by first_published ASC;
