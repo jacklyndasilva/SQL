@@ -1,0 +1,34 @@
+--Part A. A column that represents, for each row, the Z-Score of "confirmed_cases" of that row as normalized against the entirety of the dataset
+--Part B. A column to be called "confirmed_cases_zscore_state" that represents for each row, the Z-Score of confirmed cases but as normalized based on the state_name to which that row belongs. 
+--Part C. A column to be called "highest_monthly_confirmed_cases" that represents, for each rowthe largest "confirmed_cases" for the state to which that row belongs 
+--Part D. A column that computes "confirmed_cases_per_death"
+
+
+--add unique intefier to group by in part D
+alter table bigquery-public-data.covid19_nyt.us_states add primary key (id);
+
+--CTE to calculate the mean and and standard deviation
+with stats as (
+  select avg(confirmed_cases) as mean,
+          stddev(confirmed_cases) as sd
+          from bigquery-public-data.covid19_nyt.us_states),
+
+--stats grouped by state for part B
+state_stats as (
+  select avg(confirmed_cases) as state_mean,
+          stddev(confirmed_cases) as state_sd
+          from bigquery-public-data.covid19_nyt.us_states
+          GROUP BY state_name
+)
+
+ --Compute the z-score 
+ --Compute the z-score using state stats
+select date, state_name, state_fips_code, confirmed_cases,deaths,
+(confirmed_cases - mean) / sd as confirmed_cases_zscore,
+(confirmed_cases - state_mean) / state_sd as confirmed_cases_zscore_state,
+--Part C 
+MAX(confirmed_cases) OVER(PARTITION BY state_name) as highest_monthly_confirmed_cases,
+--Part D
+SUM(deaths)/SUM(confirmed_cases)*100 as confirmed_cases_per_death,
+from stats, state_stats, bigquery-public-data.covid19_nyt.us_states
+GROUP BY id;
